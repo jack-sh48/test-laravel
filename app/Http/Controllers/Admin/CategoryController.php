@@ -18,6 +18,18 @@ use Illuminate\Database\Eloquent\Model;
 
 class CategoryController extends Controller
 {
+    
+
+     public function index()
+    {
+        $categories = Category::all();
+        return view('Admin.Category.index')->with('categories',$categories);
+    }
+
+
+
+
+
     public function new(){
     	return view('Admin.Category.new') -> with('value',"safa");
     } 
@@ -28,6 +40,44 @@ class CategoryController extends Controller
 
     	// return view('Admin.Category.new') -> with('value',"safa");
     } 
+
+    public function show($id)
+    {
+        $category = Category::find($id);
+        return view('Admin.Category.show')->with('category',$category);
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        $category = Category::find($id);
+       return view('Admin.Category.edit')->with('category',$category);
+    }
+
+
+     public function update(Request $request, $id)
+    {
+        // $category = Category::find($id);
+
+        // $category->title = $request->name;
+        
+        // $category->save();
+
+        // return Redirect::to('Admin.Category.index');
+
+        $data = $request->all();
+         $category = Category::find($id);
+        $category->update($data);
+        return redirect(route('categories.edit', ['category' => $category]))
+                    ->with('info', 'Your profile has been updated successfully.');
+
+    }
+
 
 
 
