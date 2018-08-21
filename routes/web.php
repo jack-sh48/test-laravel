@@ -16,3 +16,6 @@ Route::get('/', function () {
 });
 
 include_once('admin.php');
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

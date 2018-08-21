@@ -94,19 +94,21 @@ class CategoryController extends Controller
                         ->withErrors($validator)
                         ->withInput();
         }else{
-          
+                           
+            $name = $request->image->getClientOriginalName();
+            $request->image->move('uploads',$name);//moving file
 
             $category = new Category();
             $category->title =   Input::get('title');
             $category->parent_id = Input::get('parent_id');
-            $category->image = "ffdasfsa";
+            $category->image = 'uploads/'.$name;
             $category->type = Input::get('type');
             $category->workout_type = Input::get('workout_type');
             $category->status = Input::get('status');
             $category->created_datetime = new DateTime();
             $category->save();
             \Session::flash('message', 'Successfully created category!');
-            return Redirect::to('999');
+            return Redirect::to('admin/categories');
         }
 
 
